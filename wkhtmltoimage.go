@@ -45,6 +45,10 @@ type ImageOptions struct {
 	//
 	// Leave nil to return a []byte of the image. Set to a path (/tmp/example.png) to save as a file.
 	Output string
+	// Transparency controls PNG background transparency
+	//
+	// By default background is not transparent
+	Transparency bool
 }
 
 // GenerateImage creates an image from an input.
@@ -87,10 +91,13 @@ func buildParams(options *ImageOptions) ([]string, error) {
 	a = append(a, "--disable-plugins")
 
 	a = append(a, "--format")
+	optionFormat := "png"
 	if options.Format != "" {
-		a = append(a, options.Format)
-	} else {
-		a = append(a, "png")
+		optionFormat = options.Format
+	}
+
+	if optionFormat == "png" && options.Transparency {
+		a = append(a, "--transparent")
 	}
 
 	if options.Height != 0 {
