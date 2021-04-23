@@ -95,6 +95,7 @@ func buildParams(options *ImageOptions) ([]string, error) {
 	if options.Format != "" {
 		optionFormat = options.Format
 	}
+	a = append(a, optionFormat)
 
 	if optionFormat == "png" && options.Transparency {
 		a = append(a, "--transparent")
